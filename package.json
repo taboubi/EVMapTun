@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "ionic:build": "npm run build",
-    "ionic:serve": "npm run start -- --open"
+    "ionic:serve": "npm run start -- --open",
+    "appflow:before_build": "node scripts/set-env.js"
   },
   "private": true,
   "dependencies": {
