@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Station } from '../models/station.model';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMap, faMapLocation, faBolt, faPlug, faClock, faPhone, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,7 +10,7 @@ import { faMap, faMapLocation, faBolt, faPlug, faClock, faPhone, faTimes } from 
   templateUrl: './station-modal.component.html',
   styleUrls: ['./station-modal.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FontAwesomeModule]
+  imports: [IonicModule, CommonModule]
 })
 export class StationModalComponent {
   @Input() station!: Station;
