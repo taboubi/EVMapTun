@@ -24,6 +24,7 @@ export const environment = {
 `;
 
   fs.writeFileSync(filePath, content);
+  console.log('✅ environment.ts généré avec succès', content);
   console.log('✅ environment.ts généré avec succès');
 } catch (err) {
   console.error('❌ Erreur dans set-env.js:', err);
