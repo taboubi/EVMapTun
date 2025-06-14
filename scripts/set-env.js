@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../src/environments/environment.ts');
+console.log('--- [set-env.js] Démarrage du script ---');
 
-const content = `
+try {
+  const filePath = path.join(__dirname, '../src/environments/environment.ts');
 
+  const content = `
 export const environment = {
   production: true,
   firebase: {
@@ -17,9 +19,13 @@ export const environment = {
     measurementId: '${process.env.measurementId}'
   },
   googleMapsApiKey: '${process.env.googleMapsApiKey}',
-  admobInterstitialId: '${process.env.admobInterstitialId}' // À remplacer par votre vrai ID
+  admobInterstitialId: '${process.env.admobInterstitialId}'
 };
 `;
 
-fs.writeFileSync(filePath, content);
-console.log(`✅ environment.ts mis à jour avec apiUrl = ${content}`);
+  fs.writeFileSync(filePath, content);
+  console.log('✅ environment.ts généré avec succès');
+} catch (err) {
+  console.error('❌ Erreur dans set-env.js:', err);
+  process.exit(1);
+}
