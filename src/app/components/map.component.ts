@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Station } from '../models/station.model';
+import { GoogleMapsLoaderService } from '../services/google-maps-loader.service';
 
 declare var google: any;
 
@@ -21,11 +22,12 @@ export class MapComponent implements OnInit, OnChanges, AfterViewInit {
   private initAttempts = 0;
   private maxInitAttempts = 3;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private mapsLoader: GoogleMapsLoaderService) {}
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    await this.mapsLoader.load();
     this.initMapWithRetry();
   }
 
