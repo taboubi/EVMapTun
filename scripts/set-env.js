@@ -3,6 +3,16 @@ const path = require('path');
 
 console.log('--- [set-env.js] Démarrage du script ---');
 
+const apiKey = process.env.apiKey;
+const authDomain = process.env.authDomain;
+const projectId = process.env.projectId;
+const storageBucket = process.env.storageBucket;
+const messagingSenderId = process.env.messagingSenderId;
+const appId = process.env.appId;
+const googleMapsApiKey = process.env.googleMapsApiKey;
+const measurementId = process.env.measurementId;
+const admobInterstitialId = process.env.admobInterstitialId;
+
 try {
   const filePath = path.join(__dirname, '../src/environments/environment.ts');
 
@@ -10,16 +20,16 @@ try {
 export const environment = {
   production: true,
   firebase: {
-    apiKey: '${process.env.apiKey}',
-    authDomain: '${process.env.authDomain}',
-    projectId: '${process.env.projectId}',
-    storageBucket: '${process.env.storageBucket}',
-    messagingSenderId: '${process.env.messagingSenderId}',
-    appId: '${process.env.appId}',
-    measurementId: '${process.env.measurementId}'
+    apiKey: '${apiKey}',
+    authDomain: '${authDomain}',
+    projectId: '${projectId}',
+    storageBucket: '${storageBucket}',
+    messagingSenderId: '${messagingSenderId}',
+    appId: '${appId}',
+    measurementId: '${measurementId}'
   },
-  googleMapsApiKey: '${process.env.googleMapsApiKey}',
-  admobInterstitialId: '${process.env.admobInterstitialId}'
+  googleMapsApiKey: '${googleMapsApiKey}',
+  admobInterstitialId: '${admobInterstitialId}'
 };
 `;
 
