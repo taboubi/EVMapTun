@@ -6,13 +6,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node scripts/set-env.js &ng build",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "ionic:build": "npm run build",
     "ionic:serve": "npm run start -- --open",
-    "appflow:before_build": "echo 'HOOK OK' > hook.log"
+    "appflow:before_build": "node scripts/set-env.js"
   },
   "private": true,
   "dependencies": {
