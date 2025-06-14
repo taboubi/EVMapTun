@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Filtres</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" style="color:#fff !important;vertical-align:middle;" viewBox="0 0 384 512"><path fill="#fff" d="M231 256l107-107c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 85 103.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 39.7 363c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l107 107c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L231 256z"/></svg>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label>Types de connecteurs</ion-label>
+      <ion-select [(ngModel)]="selectedTypes" multiple interface="popover">
+        <ion-select-option *ngFor="let type of connectorTypes" [value]="type">{{ type }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Puissance (kW)</ion-label>
+    </ion-item>
+    <div class="power-checkbox-group">
+      <label *ngFor="let power of powerOptions" class="power-checkbox-item">
+        <ion-checkbox slot="start" [(ngModel)]="selectedPowersMap[power]" (ionChange)="onPowerChange(power, $event.detail.checked)"></ion-checkbox>
+        <span>{{ power }}</span>
+      </label>
+    </div>
+    <ion-item>
+      <ion-label>Distance à proximité</ion-label>
+      <ion-select [(ngModel)]="selectedDistance" interface="popover">
+        <ion-select-option *ngFor="let d of distanceOptions" [value]="d">{{ d }} km</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-footer>
+    <ion-button expand="block" color="success" (click)="applyFilters()">Appliquer</ion-button>
+  </ion-footer>
+</ion-content>

@@ -1,0 +1,40 @@
+ion-header {
+  border-radius: 18px 18px 0 0;
+}
+ion-title {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+}
+ion-content {
+  background: var(--ion-background-color, #f8f9fa);
+}
+ion-list {
+  padding: 0 0 8px 0;
+}
+ion-item {
+  --background: transparent;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+ion-footer {
+  margin-top: 16px;
+}
+.power-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.power-checkbox-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 10px 4px 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.power-checkbox-item span {
+  margin-left: 4px;
+  font-size: 1em;
+  color: #222;
+}

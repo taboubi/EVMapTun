@@ -1,0 +1,94 @@
+.modal-wrapper {
+  --width: 95vw;
+  --max-width: 400px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #e0f7fa 0%, #fff 100%);
+  border: 2px solid #00c853;
+}
+ion-content {
+  background: var(--ion-background-color, #f8f9fa);
+}
+ion-list {
+  padding: 0 0 8px 0;
+}
+ion-item {
+  --background: transparent;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px 0 rgba(0,200,83,0.07);
+  transition: box-shadow 0.2s;
+}
+ion-item:hover {
+  box-shadow: 0 4px 16px 0 rgba(0,200,83,0.15);
+}
+ion-label {
+  min-width: 140px;
+  font-weight: 600;
+  color: #009688;
+  display: flex;
+  align-items: center;
+  font-size: 1.08em;
+}
+ion-text {
+  font-size: 1.08em;
+  color: #222;
+  font-weight: 500;
+}
+ion-button[color=success] {
+  --background: #d2392f !important;
+  background: #d2392f !important;
+  --box-shadow: none !important;
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-size: 1.1em;
+}
+ion-toolbar, ion-toolbar::part(container),
+ion-header, ion-header::part(container) {
+  background: #d2392f !important;
+  --background: #d2392f !important;
+  border-radius: 0 !important;
+  box-shadow: 0 2px 8px 0 rgba(0,200,83,0.10);
+}
+ion-toolbar {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+ion-title {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+  color: #fff;
+}
+svg {
+  color: #d2392f !important;
+  fill: #d2392f !important;
+}
+ion-label strong {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+}
+:host ::ng-deep .fa-solid, :host ::ng-deep .fa {
+  font-family: 'Font Awesome 6 Free', 'FontAwesome', Arial, sans-serif !important;
+  font-weight: 900 !important;
+  font-style: normal;
+  font-size: 1.2em;
+  display: inline-block;
+  vertical-align: middle;
+}
+ion-searchbar, ion-searchbar * {
+  --color: #fff !important;
+  color: #fff !important;
+  --placeholder-color: #fff !important;
+  --icon-color: #fff !important;
+  --clear-button-color: #fff !important;
+  fill: #fff !important;
+}
+
+ion-searchbar input,
+ion-searchbar .searchbar-input,
+ion-searchbar .searchbar-search-icon,
+ion-searchbar .searchbar-input::placeholder {
+  color: #fff !important;
+  fill: #fff !important;
+}

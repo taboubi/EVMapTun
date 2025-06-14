@@ -1,0 +1,179 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar color="primary">
+    <ion-title class="header-title">
+      <ion-icon name="car-electric" slot="start"></ion-icon>
+      Stations EV Tunisie
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showFilterOptions()" fill="clear">
+        <ion-icon name="options" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="refreshLocation()" fill="clear">
+        <ion-icon name="refresh" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-logo-svg">
+      <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width="38" height="38" style="display:block;"><g fill-rule="nonzero"><path fill="#4D4D4D" d="M256 0c70.684 0 134.689 28.664 181.012 74.987C483.336 121.311 512 185.316 512 256c0 70.684-28.664 134.689-74.988 181.013C390.689 483.336 326.684 512 256 512c-70.677 0-134.689-28.664-181.013-74.987C28.664 390.689 0 326.676 0 256c0-70.684 28.664-134.689 74.987-181.013C121.311 28.664 185.316 0 256 0z"/><path fill="#fff" d="M256.001 19.597c65.278 0 124.382 26.466 167.162 69.242 42.776 42.78 69.242 101.884 69.242 167.162S465.939 380.384 423.16 423.16c-42.777 42.78-101.881 69.246-167.159 69.246-65.278 0-124.382-26.466-167.162-69.243-42.777-42.779-69.243-101.884-69.243-167.162S46.062 131.619 88.839 88.839c42.78-42.776 101.884-69.242 167.162-69.242z"/><path fill="#d2392f" d="M256.001 39.594c119.517 0 216.407 96.887 216.407 216.407 0 119.518-96.89 216.407-216.407 216.407-119.521 0-216.407-96.889-216.407-216.407 0-119.52 96.886-216.407 216.407-216.407z"/><path fill="#fff" d="M366.698 255.591c0-61.131-49.555-110.687-110.686-110.687-61.13 0-110.685 49.556-110.685 110.687 0 61.13 49.555 110.687 110.685 110.687 61.131 0 110.686-49.557 110.686-110.687z"/><path fill="#d2392f" d="M323.128 206.735c-15.096-20.703-39.533-34.16-67.116-34.16-45.846 0-83.016 37.168-83.016 83.016 0 45.846 37.17 83.016 83.016 83.016 27.583 0 52.02-13.456 67.116-34.16-11.83 10.898-27.626 17.555-44.979 17.555-36.677 0-66.413-29.733-66.413-66.411s29.736-66.411 66.413-66.411c17.353 0 33.149 6.658 44.979 17.555z"/><path fill="#d2392f" d="M228.341 255.591l90.104-29.277-55.681 76.651v-94.748l55.675 76.651z"/></g></svg>
+    </span>
+  </ion-toolbar>
+
+  <!-- Search Bar -->
+  <ion-toolbar color="light">
+    <ion-searchbar class="custom-searchbar"
+      [(ngModel)]="searchAddress"
+      placeholder="Rechercher une adresse..."
+      (ionSearch)="searchByAddress()"
+      (ionClear)="refreshLocation()"
+      show-clear-button="focus"
+      debounce="500">
+    </ion-searchbar>
+    <ion-button slot="end" class="searchbar-ok-btn" (click)="searchByAddress()" [disabled]="!searchAddress || searchAddress.trim().length < 3">
+      Ok
+    </ion-button>
+    <ion-spinner *ngIf="searchingAddress" name="crescent" color="primary" style="margin-left: 16px;"></ion-spinner>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="main-content">
+  
+  <!-- Stats Cards -->
+  <div class="stats-container">
+    <ion-card class="stats-card clickable" (click)="showStationList('nearby')">
+      <ion-card-content>
+        <div class="stat-item">
+         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ nearbyStations.length }}</h3>
+            <p class="stat-label">Stations à proximité</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="stats-card clickable" (click)="showStationList('all')">
+      <ion-card-content>
+        <div class="stat-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 0C60.7 0 32 28.7 32 64l0 384c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-144 16 0c22.1 0 40 17.9 40 40l0 32c0 39.8 32.2 72 72 72s72-32.2 72-72l0-123.7c32.5-10.2 56-40.5 56-76.3l0-32c0-8.8-7.2-16-16-16l-16 0 0-48c0-8.8-7.2-16-16-16s-16 7.2-16 16l0 48-32 0 0-48c0-8.8-7.2-16-16-16s-16 7.2-16 16l0 48-16 0c-8.8 0-16 7.2-16 16l0 32c0 35.8 23.5 66.1 56 76.3L472 376c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-32c0-48.6-39.4-88-88-88l-16 0 0-192c0-35.3-28.7-64-64-64L96 0zM216.9 82.7c6 4 8.5 11.5 6.3 18.3l-25 74.9 57.8 0c6.7 0 12.7 4.2 15 10.4s.5 13.3-4.6 17.7l-112 96c-5.5 4.7-13.4 5.1-19.3 1.1s-8.5-11.5-6.3-18.3l25-74.9L96 208c-6.7 0-12.7-4.2-15-10.4s-.5-13.3 4.6-17.7l112-96c5.5-4.7 13.4-5.1 19.3-1.1z"/></svg>
+          <div class="stat-content">
+            <h3 class="stat-number">{{ getFilteredStationsCount() }}</h3>
+            <p class="stat-label">Stations</p>
+            <a class="show-all-link" (click)="showAllStations($event); $event.stopPropagation();">Afficher toutes les stations</a>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Active Filters Tags -->
+  <div class="active-filters" *ngIf="hasActiveFilters()">
+    <div class="filters-tags">
+      <div class="filter-tag" *ngFor="let type of filterSelectedTypes">
+        {{ type }}
+        <span class="tag-remove" (click)="removeFilterType(type)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="0.7em" height="0.7em"><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        </span>
+      </div>
+      <div class="filter-tag" *ngFor="let power of filterSelectedPowers">
+        {{ power }}
+        <span class="tag-remove" (click)="removeFilterPower(power)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="0.7em" height="0.7em"><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        </span>
+      </div>
+      <div class="filter-tag" *ngIf="filterSelectedDistance && filterSelectedDistance !== nearbyDistance">
+        {{ filterSelectedDistance }} km
+        <span class="tag-remove" (click)="removeFilterDistance()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="0.7em" height="0.7em"><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        </span>
+      </div>
+    </div>
+    <a class="reset-filters" (click)="resetFilters()">Réinitialiser les filtres</a>
+  </div>
+
+  <!-- Map Container -->
+  <div class="map-container">
+    <app-map 
+      *ngIf="mapZoom && nearbyDistance; else loadingMap"
+      #mapComponent
+      [stations]="showList ? displayedStations : nearbyStations"
+      [userLocation]="userLocation"
+      [mapZoom]="mapZoom"
+      (stationSelected)="onStationSelected($event)"
+      [attr.data-key]="mapZoom + '-' + nearbyDistance">
+    </app-map>
+    <ng-template #loadingMap>
+      <div style="height:400px;display:flex;align-items:center;justify-content:center;">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Liste des stations à proximité sous la carte (par défaut) -->
+  <div class="station-list-container" *ngIf="!showList && nearbyStations.length > 0">
+    <ion-card class="station-list-card" *ngFor="let station of nearbyStations">
+      <ion-card-content>
+        <div class="station-list-title">{{ station.name }}</div>
+        <div class="station-list-address">{{ station.address }}</div>
+        <div class="station-list-details">{{ station.chargingPower && station.chargingPower.length ? station.chargingPower.join(', ') : '' }} &bull; {{ station.connectorTypes.join(', ') }}</div>
+        <ion-button fill="clear" size="small" color="primary" (click)="onStationSelected(station)">Voir détails</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  <!-- Overlay gradient -->
+  <div class="map-overlay"></div>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" style="display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: none !important; --border-radius: 0 !important;border-radius: 0 !important;">
+      <span style="display: flex; align-items: center; justify-content: center; width: 1.6em; height: 1.6em;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1.3em" height="1.3em" style="color:#fff !important; fill:#fff !important; display:block;"><path fill="#fff" d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></svg>
+      </span>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="refreshLocation()" color="secondary">
+        <span style="display: flex; align-items: center; justify-content: center; width: 1.4em; height: 1.4em;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1.2em" height="1.2em" style="color:#fff;display:block;"><path fill="#fff" d="M256 0c17.7 0 32 14.3 32 32l0 34.7C368.4 80.1 431.9 143.6 445.3 224l34.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-34.7 0C431.9 368.4 368.4 431.9 288 445.3l0 34.7c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-34.7C143.6 431.9 80.1 368.4 66.7 288L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l34.7 0C80.1 143.6 143.6 80.1 224 66.7L224 32c0-17.7 14.3-32 32-32zM128 256a128 128 0 1 0 256 0 128 128 0 1 0 -256 0zm128-80a80 80 0 1 1 0 160 80 80 0 1 1 0-160z"/></svg>
+        </span>
+      </ion-fab-button>
+      <ion-fab-button (click)="showFilterOptions()" color="tertiary">
+        <span style="display: flex; align-items: center; justify-content: center; width: 1.4em; height: 1.4em;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1.2em" height="1.2em" style="color:#fff;display:block;"><path fill="#fff" d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/></svg>
+        </span>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Chargement des stations...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && stations.length === 0">
+    <ion-icon name="car-electric-outline" color="medium"></ion-icon>
+    <h2>Aucune station trouvée</h2>
+    <p>Aucune station de recharge n'a été trouvée dans la base de données.</p>
+    <ion-button fill="outline" (click)="refreshLocation()">
+      <ion-icon name="refresh" slot="start"></ion-icon>
+      Actualiser
+    </ion-button>
+  </div>
+
+  <!-- Liste des stations sous la carte -->
+  <div *ngIf="showList" class="station-list-container">
+    <ion-card class="station-list-card" *ngFor="let station of displayedStations">
+      <ion-card-content>
+        <div class="station-list-title">{{ station.name }}</div>
+        <div class="station-list-address">{{ station.address }}</div>
+        <div class="station-list-details">
+          <span>{{ station.numberOfChargers }} stations</span> ·
+          <span>{{ station.chargingPower && station.chargingPower.length ? station.chargingPower.join(', ') : '' }}</span> ·
+          <span>{{ station.connectorTypes.join(', ') }}</span>
+        </div>
+        <ion-button fill="clear" size="small" color="primary" (click)="onStationSelected(station)">Voir détails</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
