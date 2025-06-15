@@ -16,6 +16,7 @@ import { MapComponent } from '../components/map.component';
 import { FilterModalComponent } from '../components/filter-modal.component';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +63,20 @@ export class HomePage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    // Force le thème clair sur cette page
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+
     this.isLoading = true;
+    // Définir la couleur de la status bar Android comme le header
+    if ((window as any).Capacitor && (window as any).Capacitor.isNativePlatform && (window as any).Capacitor.getPlatform() === 'android') {
+      try {
+        await StatusBar.setBackgroundColor({ color: '#d2392f' });
+        await StatusBar.setStyle({ style: Style.Light });
+      } catch (e) {
+        console.warn('StatusBar plugin not available:', e);
+      }
+    }
     this.mapParamsSub = this.firebaseService.getMapParams$().subscribe(params => {
       console.log('[HOME DEBUG] Params Firestore reçus:', params);
       if (params) {
@@ -161,14 +175,15 @@ export class HomePage implements OnInit {
   }
 
   async onStationSelected(station: Station) {
-    await this.adsService.showInterstitialAd();
-    await new Promise(resolve => setTimeout(resolve, 500)); // délai pour laisser la pub s'afficher
+    // Ouvre d'abord le modal de détail de la station
     const modal = await this.modalController.create({
       component: StationModalComponent,
       componentProps: { station },
       cssClass: 'modal-wrapper'
     });
     await modal.present();
+    // Affiche la pub AdMob interstitielle juste après l'ouverture du modal (sans délai)
+    await this.adsService.showInterstitialAd();
   }
 
   async refreshLocation() {
@@ -211,6 +226,7 @@ export class HomePage implements OnInit {
   }
 
   async showFilterOptions() {
+    console.log('[DEBUG] showFilterOptions called');
     const modal = await this.modalController.create({
       component: FilterModalComponent,
       componentProps: {
@@ -224,6 +240,7 @@ export class HomePage implements OnInit {
       },
       cssClass: 'modal-wrapper'
     });
+    console.log('[DEBUG] modal created, presenting...');
     modal.onDidDismiss().then(result => {
       if (result.data) {
         this.filterSelectedTypes = result.data.selectedTypes || [];
@@ -233,6 +250,7 @@ export class HomePage implements OnInit {
       }
     });
     await modal.present();
+    console.log('[DEBUG] modal presented');
   }
 
   applyFilters() {

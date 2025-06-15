@@ -54,6 +54,8 @@ ion-header, ion-header::part(container) {
 ion-toolbar {
   padding-left: 0 !important;
   padding-right: 0 !important;
+  background: #d2392f !important;
+  --background: #d2392f !important;
 }
 ion-title {
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
