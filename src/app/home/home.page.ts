@@ -17,6 +17,7 @@ import { FilterModalComponent } from '../components/filter-modal.component';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { TestModalComponent } from '../components/test-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -388,5 +389,13 @@ export class HomePage implements OnInit {
     this.filterSelectedPowers = [];
     this.filterSelectedDistance = undefined;
     this.applyFilters();
+  }
+
+  async openTestModal() {
+    const modal = await this.modalController.create({
+      component: TestModalComponent,
+      cssClass: 'modal-wrapper'
+    });
+    await modal.present();
   }
 }
