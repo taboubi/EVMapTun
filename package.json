@@ -14,6 +14,7 @@
     "ionic:serve": "npm run start -- --open",
     "appflow:before_build": "node scripts/set-env.js",
     "appflow:android:before_build": "node scripts/inject-admob-manifest.js",
+    "appflow:ios:before_build": "node scripts/inject-admob-plist.js",
     "capacitor:sync:after": "node scripts/inject-admob-manifest.js"
   },
   "private": true,
