@@ -6,15 +6,19 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { ModalController } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 
-// Force le thème clair sur toute l'application
-(function forceLightTheme() {
+// Force le thème clair et la couleur de la status bar dès le démarrage global de l'app
+(function forceLightThemeAndStatusBar() {
   document.body.classList.remove('dark');
   document.body.classList.add('light');
+  // Appel Capacitor StatusBar (si disponible)
+  StatusBar.setStyle({ style: Style.Light }).catch(() => {});
+  StatusBar.setBackgroundColor({ color: '#d2392f' }).catch(() => {});
 })();
 
 bootstrapApplication(AppComponent, {

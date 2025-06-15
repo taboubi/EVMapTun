@@ -63,20 +63,17 @@ export class HomePage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // Force le thème clair sur cette page
+    // Force le thème clair sur toute l'application
     document.body.classList.remove('dark');
     document.body.classList.add('light');
-
-    this.isLoading = true;
-    // Définir la couleur de la status bar Android comme le header
-    if ((window as any).Capacitor && (window as any).Capacitor.isNativePlatform && (window as any).Capacitor.getPlatform() === 'android') {
-      try {
-        await StatusBar.setBackgroundColor({ color: '#d2392f' });
-        await StatusBar.setStyle({ style: Style.Light });
-      } catch (e) {
-        console.warn('StatusBar plugin not available:', e);
-      }
+    // Force la couleur de la status bar (Android)
+    try {
+      await StatusBar.setStyle({ style: Style.Light });
+      await StatusBar.setBackgroundColor({ color: '#d2392f' });
+    } catch (e) {
+      console.warn('StatusBar plugin not available:', e);
     }
+    this.isLoading = true;
     this.mapParamsSub = this.firebaseService.getMapParams$().subscribe(params => {
       console.log('[HOME DEBUG] Params Firestore reçus:', params);
       if (params) {
@@ -175,15 +172,16 @@ export class HomePage implements OnInit {
   }
 
   async onStationSelected(station: Station) {
-    // Ouvre d'abord le modal de détail de la station
-    const modal = await this.modalController.create({
+    // Ouvre le modal de détail de la station (sans attendre la pub)
+    this.modalController.create({
       component: StationModalComponent,
       componentProps: { station },
       cssClass: 'modal-wrapper'
+    }).then(modal => {
+      modal.present();
+      // Affiche la pub AdMob interstitielle juste après, sans attendre
+      this.adsService.showInterstitialAd();
     });
-    await modal.present();
-    // Affiche la pub AdMob interstitielle juste après l'ouverture du modal (sans délai)
-    await this.adsService.showInterstitialAd();
   }
 
   async refreshLocation() {
