@@ -13,7 +13,7 @@
     "ionic:build": "npm run build",
     "ionic:serve": "npm run start -- --open",
     "appflow:before_build": "node scripts/set-env.js",
-    "appflow:android:before_build": "node scripts/inject-admob-manifest.js & node scripts/inject-admob-plist.js & node scripts/inject-statusbar-style.js",
+    "appflow:android:before_build": "node scripts/hook-log.js & node scripts/inject-admob-manifest.js & node scripts/inject-admob-plist.js & node scripts/inject-statusbar-style.js",
     "appflow:ios:before_build": "node scripts/inject-admob-manifest.js  & node scripts/inject-admob-plist.js & node scripts/inject-statusbar-style.js",
     "capacitor:sync:before": "node scripts/inject-admob-manifest.js & node scripts/inject-admob-plist.js & node scripts/inject-statusbar-style.js",
     "capacitor:sync:after": "node scripts/inject-admob-manifest.js & node scripts/inject-admob-plist.js & node scripts/inject-statusbar-style.js",
