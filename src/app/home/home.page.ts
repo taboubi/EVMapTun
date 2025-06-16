@@ -173,16 +173,19 @@ export class HomePage implements OnInit {
   }
 
   async onStationSelected(station: Station) {
-    // Ouvre le modal de détail de la station (sans attendre la pub)
-    this.modalController.create({
+    // Affiche d'abord la pub AdMob interstitielle
+    try {
+      await this.adsService.showInterstitialAd();
+    } catch (e) {
+      console.warn('Erreur AdMob:', e);
+    }
+    // Puis ouvre le modal de détail de la station
+    const modal = await this.modalController.create({
       component: StationModalComponent,
       componentProps: { station },
       cssClass: 'modal-wrapper'
-    }).then(modal => {
-      modal.present();
-      // Affiche la pub AdMob interstitielle juste après, sans attendre
-      this.adsService.showInterstitialAd();
     });
+    await modal.present();
   }
 
   async refreshLocation() {
