@@ -229,30 +229,35 @@ export class HomePage implements OnInit {
 
   async showFilterOptions() {
     console.log('[DEBUG] showFilterOptions called');
-    const modal = await this.modalController.create({
-      component: FilterModalComponent,
-      componentProps: {
-        connectorTypes: this.connectorTypes,
-        selectedTypes: this.filterSelectedTypes,
-        powerOptions: this.powerOptions,
-        selectedPowers: this.filterSelectedPowers,
-        distanceOptions: this.distanceOptions,
-        selectedDistance: this.filterSelectedDistance,
-        defaultDistance: this.nearbyDistance
-      },
-      cssClass: 'modal-wrapper'
-    });
-    console.log('[DEBUG] modal created, presenting...');
-    modal.onDidDismiss().then(result => {
-      if (result.data) {
-        this.filterSelectedTypes = result.data.selectedTypes || [];
-        this.filterSelectedPowers = result.data.selectedPowers || [];
-        this.filterSelectedDistance = result.data.selectedDistance || this.filterSelectedDistance;
-        this.applyFilters();
-      }
-    });
-    await modal.present();
-    console.log('[DEBUG] modal presented');
+    try {
+      console.log('[DEBUG] Creating filter modal...');
+      const modal = await this.modalController.create({
+        component: FilterModalComponent,
+        componentProps: {
+          connectorTypes: this.connectorTypes,
+          selectedTypes: this.filterSelectedTypes,
+          powerOptions: this.powerOptions,
+          selectedPowers: this.filterSelectedPowers,
+          distanceOptions: this.distanceOptions,
+          selectedDistance: this.filterSelectedDistance,
+          defaultDistance: this.nearbyDistance
+        },
+        cssClass: 'modal-wrapper'
+      });
+      console.log('[DEBUG] Modal created', modal);
+      modal.onDidDismiss().then(result => {
+        if (result.data) {
+          this.filterSelectedTypes = result.data.selectedTypes || [];
+          this.filterSelectedPowers = result.data.selectedPowers || [];
+          this.filterSelectedDistance = result.data.selectedDistance || this.filterSelectedDistance;
+          this.applyFilters();
+        }
+      });
+      await modal.present();
+      console.log('[DEBUG] Modal presented');
+    } catch (err) {
+      console.error('[ERROR] showFilterOptions failed', err);
+    }
   }
 
   applyFilters() {
