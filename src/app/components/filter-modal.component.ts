@@ -23,7 +23,9 @@ export class FilterModalComponent implements OnInit {
   @Input() selectedDistance: number = 1;
   @Input() defaultDistance: number = 1;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController) {
+    console.log('[DEBUG] FilterModalComponent constructed');
+  }
 
   ngOnInit() {
     if (this.selectedPowers && this.selectedPowers.length) {
