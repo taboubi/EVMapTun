@@ -17,6 +17,15 @@ const config: CapacitorConfig = {
       'NSLocationWhenInUseUsageDescription': 'Cette application a besoin de votre position pour afficher les stations à proximité.',
       'NSLocationAlwaysUsageDescription': 'Cette application a besoin d’un accès permanent à votre position pour certaines fonctionnalités.'
     }
+  },
+  "android": {
+    "webContentsDebuggingEnabled": true
+  },
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "*"
+    ]
   }
 };
 

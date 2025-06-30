@@ -183,7 +183,9 @@ export class HomePage implements OnInit {
     const modal = await this.modalController.create({
       component: StationModalComponent,
       componentProps: { station },
-      cssClass: 'modal-wrapper'
+      cssClass: 'modal-wrapper',
+      showBackdrop: false,
+      backdropDismiss: false
     });
     await modal.present();
   }
@@ -242,7 +244,9 @@ export class HomePage implements OnInit {
           selectedDistance: this.filterSelectedDistance,
           defaultDistance: this.nearbyDistance
         },
-        cssClass: 'modal-wrapper'
+        cssClass: 'modal-wrapper',
+        showBackdrop: false,
+        backdropDismiss: false
       });
       console.log('[DEBUG] Modal created', modal);
       modal.onDidDismiss().then(result => {
@@ -402,7 +406,9 @@ export class HomePage implements OnInit {
   async openTestModal() {
     const modal = await this.modalController.create({
       component: TestModalComponent,
-      cssClass: 'modal-wrapper'
+      cssClass: 'modal-wrapper',
+      showBackdrop: false,
+      backdropDismiss: false
     });
     await modal.present();
   }
