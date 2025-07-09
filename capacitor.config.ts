@@ -3,11 +3,20 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'ev.chargemap.tun',
   appName: 'ev-charge-car',
-  webDir: 'www',
+  webDir: 'dist',
+  server: {
+    androidScheme: 'https',
+    "allowNavigation": [
+      "*"
+    ]
+  },
   plugins: {
     AdMob: {
       appIdAndroid: 'ca-app-pub-7963319750770607~6481253029',
       appIdIos: 'ca-app-pub-7963319750770607~2681075984'
+    },
+    SplashScreen: {
+      launchShowDuration: 0
     }
   },
   cordova: {
@@ -18,14 +27,8 @@ const config: CapacitorConfig = {
       'NSLocationAlwaysUsageDescription': 'Cette application a besoin d’un accès permanent à votre position pour certaines fonctionnalités.'
     }
   },
-  "android": {
+  android: {
     "webContentsDebuggingEnabled": true
-  },
-  "server": {
-    "androidScheme": "https",
-    "allowNavigation": [
-      "*"
-    ]
   }
 };
 

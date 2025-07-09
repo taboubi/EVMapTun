@@ -60,3 +60,17 @@ ion-button {
 ion-searchbar {
   margin-top: 18px;
 }
+
+// Dans src/global.scss
+.modal-wrapper {
+  z-index: 20000 !important;
+}
+
+ion-modal {
+  z-index: 20000 !important;
+}
+
+// Force le modal à être au-dessus de tout
+.modal-wrapper ion-backdrop {
+  z-index: 19999 !important;
+}
