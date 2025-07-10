@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 
 @Component({
   selector: 'app-filter-modal',
@@ -25,6 +26,7 @@ export class FilterModalComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) {
     console.log('[DEBUG] FilterModalComponent constructed');
+    defineCustomElement();
   }
 
   ngOnInit() {

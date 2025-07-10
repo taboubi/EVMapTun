@@ -18,6 +18,7 @@ import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { TestModalComponent } from '../components/test-modal.component';
+import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 
 @Component({
   selector: 'app-home',
@@ -61,7 +62,9 @@ export class HomePage implements OnInit {
     private adsService: AdsService,
     private modalController: ModalController,
     private http: HttpClient
-  ) {}
+  ) {
+    defineCustomElement();
+  }
 
   async ngOnInit() {
     // Force le thème clair sur toute l'application
