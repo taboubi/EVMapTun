@@ -16,7 +16,6 @@ import { MapComponent } from '../components/map.component';
 import { FilterModalComponent } from '../components/filter-modal.component';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
-import { StatusBar, Style } from '@capacitor/status-bar';
 import { TestModalComponent } from '../components/test-modal.component';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 
@@ -176,12 +175,6 @@ export class HomePage implements OnInit {
   }
 
   async onStationSelected(station: Station) {
-    // Affiche d'abord la pub AdMob interstitielle
-    try {
-      await this.adsService.showInterstitialAd();
-    } catch (e) {
-      console.warn('Erreur AdMob:', e);
-    }
     // Puis ouvre le modal de détail de la station
     const modal = await this.modalController.create({
       component: StationModalComponent,
@@ -191,6 +184,13 @@ export class HomePage implements OnInit {
       backdropDismiss: false
     });
     await modal.present();
+    // Affiche d'abord la pub AdMob interstitielle
+    try {
+      await this.adsService.showInterstitialAd();
+    } catch (e) {
+      console.warn('Erreur AdMob:', e);
+    }
+    
   }
 
   async refreshLocation() {
