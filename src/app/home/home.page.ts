@@ -69,13 +69,7 @@ export class HomePage implements OnInit {
     // Force le thème clair sur toute l'application
     document.body.classList.remove('dark');
     document.body.classList.add('light');
-    // Force la couleur de la status bar (Android)
-    try {
-      await StatusBar.setStyle({ style: Style.Light });
-      await StatusBar.setBackgroundColor({ color: '#d2392f' });
-    } catch (e) {
-      console.warn('StatusBar plugin not available:', e);
-    }
+
     this.isLoading = true;
     this.mapParamsSub = this.firebaseService.getMapParams$().subscribe(params => {
       console.log('[HOME DEBUG] Params Firestore reçus:', params);
