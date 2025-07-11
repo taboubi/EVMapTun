@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 //import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMap, faMapLocation, faBolt, faPlug, faClock, faPhone, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-station-modal',
@@ -27,9 +28,9 @@ export class StationModalComponent {
     defineCustomElement();
   }
 
-  openDirections() {
+  async openDirections() {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${this.station.latitude},${this.station.longitude}`;
-    window.open(url, '_blank');
+    await Browser.open({ url });
   }
 
   close() {
