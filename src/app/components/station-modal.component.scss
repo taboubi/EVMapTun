@@ -17,24 +17,50 @@ ion-item {
   --background: transparent;
   border-radius: 12px;
   margin-bottom: 8px;
-  box-shadow: 0 2px 8px 0 rgba(0,200,83,0.07);
-  transition: box-shadow 0.2s;
+  box-shadow: none !important;
+  --box-shadow: none !important;
+  /* Suppression des styles avancés */
+  padding: 0;
+  border-bottom: none;
+  display: block;
+  background: none;
 }
-ion-item:hover {
-  box-shadow: 0 4px 16px 0 rgba(0,200,83,0.15);
+ion-item:last-child {
+  border-bottom: none;
 }
 ion-label {
   min-width: 140px;
   font-weight: 600;
   color: #009688;
-  display: flex;
-  align-items: center;
+  display: block;
+  align-items: unset;
   font-size: 1.08em;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  margin-right: 0;
+  letter-spacing: normal;
+  flex: unset;
 }
 ion-text {
   font-size: 1.08em;
   color: #222;
-  font-weight: 500;
+  font-weight: 400;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  letter-spacing: normal;
+  flex: unset;
+  text-align: right;
+  display: block;
+  width: 100%;
+}
+ion-item:hover, ion-item:focus, ion-item.ion-focused {
+  box-shadow: none !important;
+  --box-shadow: none !important;
+  background: none;
 }
 ion-button[color=success] {
   --background: #d2392f !important;
@@ -95,3 +121,10 @@ ion-searchbar .searchbar-input::placeholder {
   color: #fff !important;
   fill: #fff !important;
 }
+
+/* Bouton de menu : margin bottom et right */
+ion-button.menu-button {
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+}
+

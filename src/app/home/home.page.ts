@@ -18,6 +18,8 @@ import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 import { TestModalComponent } from '../components/test-modal.component';
 import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
+import { Geolocation } from '@capacitor/geolocation';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -84,6 +86,7 @@ export class HomePage implements OnInit {
         console.log('[HOME DEBUG] mapZoom appliqué:', this.mapZoom, 'nearbyDistance appliqué:', this.nearbyDistance);
       }
     });
+    await this.requestGeolocationPermission();
     this.loadUserLocation();
     this.loadStations();
     setTimeout(() => {
@@ -408,5 +411,12 @@ export class HomePage implements OnInit {
       backdropDismiss: false
     });
     await modal.present();
+  }
+
+  async requestGeolocationPermission() {
+    const permStatus = await Geolocation.checkPermissions();
+    if (permStatus.location !== 'granted') {
+      await Geolocation.requestPermissions();
+    }
   }
 }

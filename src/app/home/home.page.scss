@@ -326,6 +326,8 @@ ion-searchbar.custom-searchbar .searchbar-input::placeholder {
 // Floating Action Button Styles
 ion-fab {
   z-index: 10;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
   
   ion-fab-button {
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
