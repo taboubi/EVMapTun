@@ -55,3 +55,34 @@ if (fs.existsSync(manifestPath)) {
 } else {
   console.error('AndroidManifest.xml not found!');
 }
+
+const infoPlistPath = path.join(__dirname, '../ios/App/App/Info.plist');
+
+if (fs.existsSync(infoPlistPath)) {
+  let plist = fs.readFileSync(infoPlistPath, 'utf8');
+  let changed = false;
+
+  if (!plist.includes('NSLocationWhenInUseUsageDescription')) {
+    plist = plist.replace(
+      /(<dict>)/,
+      `$1\n\t<key>NSLocationWhenInUseUsageDescription</key>\n\t<string>Cette application a besoin de votre position pour afficher les stations à proximité.</string>`
+    );
+    changed = true;
+  }
+  if (!plist.includes('NSLocationAlwaysAndWhenInUseUsageDescription')) {
+    plist = plist.replace(
+      /(<dict>)/,
+      `$1\n\t<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>\n\t<string>Cette application utilise votre position pour améliorer l’expérience utilisateur.</string>`
+    );
+    changed = true;
+  }
+
+  if (changed) {
+    fs.writeFileSync(infoPlistPath, plist, 'utf8');
+    console.log('Location permissions injected into Info.plist');
+  } else {
+    console.log('Location permissions already present in Info.plist');
+  }
+} else {
+  console.error('Info.plist not found!');
+}
