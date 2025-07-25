@@ -21,7 +21,7 @@ export class AdsService {
     try {
       await AdMob.prepareInterstitial({
         adId,
-        isTesting: true,
+        isTesting: false,
       });
       await AdMob.showInterstitial();
     } catch (e) {
