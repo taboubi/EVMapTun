@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, doc, getDoc, docData } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, getDoc, docData, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Station } from '../models/station.model';
+import { NewStation } from '../models/newstation.model';
 import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -38,4 +39,12 @@ export class FirebaseService {
     }
     return { zoom: 10, distance: 50 };
   }
+
+  async addStation(station: NewStation): Promise<void> {
+  const stationRef = collection(this.firestore, 'stationadd');
+  await addDoc(stationRef, {
+    ...station,
+    createdAt: new Date()
+  });
+}
 }

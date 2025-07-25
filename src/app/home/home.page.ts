@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  IonHeader, IonToolbar, IonTitle, IonContent,
+  IonHeader, IonToolbar, IonTitle, IonContent, ToastController, AlertController,IonCardHeader, IonCardSubtitle, IonCardTitle,
   IonCard, IonCardContent, IonIcon, IonFab, IonFabButton, IonFabList, IonSpinner, IonButton, IonSearchbar, IonButtons
 } from '@ionic/angular/standalone';
 import { FirebaseService } from '../services/firebase.service';
 import { GeolocationService } from '../services/geolocation.service';
 import { AdsService } from '../services/ads.service';
 import { Station } from '../models/station.model';
+import { NewStation } from '../models/newstation.model';
 import { StationModalComponent } from '../components/station-modal.component';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
@@ -31,7 +32,7 @@ import { Platform } from '@ionic/angular';
     FormsModule,
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonCard, IonCardContent, IonIcon, IonFab, IonFabButton, IonFabList, IonSpinner, IonButton, IonSearchbar, IonButtons,
-    MapComponent
+    MapComponent,IonCardHeader, IonCardSubtitle, IonCardTitle,
     // FilterModalComponent n'est PAS nécessaire ici car il est utilisé dynamiquement via ModalController
   ]
 })
@@ -62,7 +63,9 @@ export class HomePage implements OnInit {
     private geolocationService: GeolocationService,
     private adsService: AdsService,
     private modalController: ModalController,
-    private http: HttpClient
+    private http: HttpClient,
+    private alertController: AlertController,
+    private toastController: ToastController,
   ) {
     defineCustomElement();
   }
@@ -145,17 +148,27 @@ export class HomePage implements OnInit {
       return;
     }
     // Utilise la distance dynamique du filtre si sélectionnée, sinon celle de Firestore
-    const distance = typeof this.filterSelectedDistance === 'number' ? this.filterSelectedDistance : this.nearbyDistance;
-    this.nearbyStations = this.stations.filter(station => {
-      const dist = this.getDistance(
-        this.userLocation!.latitude,
-        this.userLocation!.longitude,
-        station.latitude,
-        station.longitude
-      );
-      return dist < distance;
-    });
-    console.log('[HOME DEBUG] Filtrage proximité avec distance =', distance);
+    const distanceLimit = typeof this.filterSelectedDistance === 'number'
+    ? this.filterSelectedDistance
+    : this.nearbyDistance;
+
+    this.nearbyStations = this.stations
+      .map(station => {
+        const dist = this.getDistance(
+          this.userLocation!.latitude,
+          this.userLocation!.longitude,
+          station.latitude,
+          station.longitude
+        );
+        return {
+          ...station,
+          distance: dist, // distance en kilomètres
+        };
+      })
+      .filter(station => station.distance < distanceLimit)
+      .sort((a, b) => a.distance - b.distance); // tri croissant
+
+    console.log('[HOME DEBUG] Filtrage proximité avec distance =', distanceLimit);
   }
 
   getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -419,4 +432,64 @@ export class HomePage implements OnInit {
       await Geolocation.requestPermissions();
     }
   }
+
+  async addStationToFirestore(data: any) {
+    const station: NewStation = {
+      name: data.name,
+      address: data.address,
+      numberOfChargers: parseInt(data.nbborne, 10) || 0,
+      chargingPower: data.puissance ? [data.puissance] : [],
+      connectorTypes: data.typerecharge ? [data.typerecharge] : [],
+      // ajouter latitude/longitude si tu veux plus tard
+    };
+
+    try {
+      await this.firebaseService.addStation(station); // ✅ appel via le service
+      this.presentToast('Station ajoutée avec succès.', 'success');
+    } catch (error) {
+      console.error('Erreur :', error);
+      this.presentToast('Erreur lors de l’ajout.', 'danger');
+    }
+  }
+  async presentToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      color,
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+
+  async openAddStationPopup() {
+
+    const alert = await this.alertController.create({
+      header: 'Ajouter une station',
+      inputs: [
+        { name: 'name', type: 'text', placeholder: 'Nom de la station' },
+        { name: 'address', type: 'text', placeholder: 'Adresse' },
+        { name: 'nbborne', type: 'number', placeholder: 'Nombre de bornes' },
+        { name: 'puissance', type: 'text', placeholder: 'Puissance (ex: 22kW)' },
+        { name: 'typerecharge', type: 'text', placeholder: 'Type de recharge (Type 2, ccs)' },
+      ],
+      buttons: [
+        { text: 'Annuler', role: 'cancel' },
+        {
+          text: 'Ajouter',
+          handler: async (data) => {
+            // Validation simple
+            if (!data.name || !data.address || !data.nbborne || !data.puissance || !data.typerecharge) {
+              this.presentToast('Tous les champs sont obligatoires.', 'danger');
+              return false; // Ne ferme pas le popup
+            }
+            await this.addStationToFirestore(data);
+            return true;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }

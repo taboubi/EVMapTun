@@ -11,4 +11,5 @@ export interface Station {
   operatingHours?: string;
   phoneNumber?: string;
   network?: string;
+  distance?: number; // distance en km, optionnel
 }

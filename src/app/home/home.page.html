@@ -111,6 +111,7 @@
   <div class="station-list-container" *ngIf="!showList && nearbyStations.length > 0">
     <ion-card class="station-list-card" *ngFor="let station of nearbyStations">
       <ion-card-content>
+        
         <div class="station-list-title">{{ station.name }}</div>
         <div class="station-list-address">{{ station.address }}</div>
         <div class="station-list-details">{{ station.chargingPower && station.chargingPower.length ? station.chargingPower.join(', ') : '' }} &bull; {{ station.connectorTypes.join(', ') }}</div>
@@ -133,6 +134,11 @@
       <ion-fab-button (click)="refreshLocation()" color="secondary">
         <span style="display: flex; align-items: center; justify-content: center; width: 1.4em; height: 1.4em;">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1.2em" height="1.2em" style="color:#fff;display:block;"><path fill="#fff" d="M256 0c17.7 0 32 14.3 32 32l0 34.7C368.4 80.1 431.9 143.6 445.3 224l34.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-34.7 0C431.9 368.4 368.4 431.9 288 445.3l0 34.7c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-34.7C143.6 431.9 80.1 368.4 66.7 288L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l34.7 0C80.1 143.6 143.6 80.1 224 66.7L224 32c0-17.7 14.3-32 32-32zM128 256a128 128 0 1 0 256 0 128 128 0 1 0 -256 0zm128-80a80 80 0 1 1 0 160 80 80 0 1 1 0-160z"/></svg>
+        </span>
+      </ion-fab-button>
+      <ion-fab-button (click)="openAddStationPopup()" color="success">
+        <span style="display: flex; align-items: center; justify-content: center; width: 1.4em; height: 1.4em;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="1.2em" height="1.2em" style="color:#fff;display:block;"><path fill="#fff"  d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
         </span>
       </ion-fab-button>
       <ion-fab-button (click)="showFilterOptions()" color="tertiary">
@@ -172,6 +178,9 @@
           <span>{{ station.connectorTypes.join(', ') }}</span>
         </div>
         <ion-button fill="clear" size="small" color="primary" (click)="onStationSelected(station)">Voir détails</ion-button>
+        <div *ngIf="station.distance != null" class="distance-tag">
+      🚗 {{ station.distance | number: '1.1-2' }} km
+    </div>
       </ion-card-content>
     </ion-card>
   </div>

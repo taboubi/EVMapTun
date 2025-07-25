@@ -128,3 +128,22 @@ ion-button.menu-button {
   margin-right: 2rem;
 }
 
+.tag {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.tag-green {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.tag-red {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
