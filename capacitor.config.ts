@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ev.chargemap.tun',
-  appName: 'ev-charge-car',
+  appId: 'tun.rechargeev.map',
+  appName: 'Recharge EV Tunisie',
   webDir: 'www',
   server: {
     androidScheme: 'https',
