@@ -1,63 +1,218 @@
-# Politique de confidentialité
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de confidentialité</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-Dernière mise à jour : [14 juin 2025]
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
-## 1. Introduction
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
 
-Cette application a été développée dans le but de fournir aux utilisateurs une carte interactive des stations de recharge pour véhicules électriques en Tunisie. Nous accordons une grande importance à la vie privée de nos utilisateurs.
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 60px 40px;
+            text-align: center;
+        }
 
-En utilisant cette application, vous acceptez les pratiques décrites dans cette politique de confidentialité.
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
 
-## 2. Données collectées
+        .header .date {
+            font-size: 1em;
+            opacity: 0.9;
+        }
 
-### 📍 Localisation
+        .content {
+            padding: 50px 40px;
+        }
 
-Nous collectons votre **position géographique approximative ou précise** uniquement si vous autorisez l'accès à la localisation. Cette information est utilisée pour :
-- afficher les stations à proximité,
-- améliorer l'expérience utilisateur.
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
 
-Les données de localisation ne sont **jamais stockées** sur nos serveurs ni partagées avec des tiers.
+        h2:first-child {
+            margin-top: 0;
+        }
 
-### 📱 Données techniques
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-L'application peut collecter des informations techniques anonymes comme :
-- le type d'appareil,
-- le système d'exploitation,
-- les performances de l'application.
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
 
-Ces données servent uniquement à améliorer la qualité et la stabilité du service.
+        ul {
+            margin: 15px 0 15px 30px;
+        }
 
-## 3. Accès et autorisations
+        li {
+            margin-bottom: 10px;
+        }
 
-L'application peut demander les autorisations suivantes :
-- **Accès à la localisation** (pour la carte)
-- **Accès à Internet** (pour charger les données des stations)
+        strong {
+            color: #764ba2;
+            font-weight: 600;
+        }
 
-Aucune autre donnée personnelle (nom, e-mail, contacts, etc.) n'est collectée.
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
 
-## 4. Partage des données
+        a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
 
-Nous **ne partageons aucune donnée personnelle** avec des tiers.
+        .contact-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
 
-## 5. Publicité
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
 
-Cette application peut afficher de la publicité via **Google AdMob**. AdMob peut collecter certaines informations non personnelles pour personnaliser les annonces. Consultez la politique de confidentialité de Google :
-[https://policies.google.com/privacy](https://policies.google.com/privacy)
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
 
-## 6. Droits des utilisateurs
+            .header {
+                padding: 40px 20px;
+            }
 
-Vous pouvez à tout moment désactiver l’accès à votre localisation depuis les paramètres de votre appareil.
+            .header h1 {
+                font-size: 2em;
+            }
 
-## 7. Confidentialité des enfants
+            .content {
+                padding: 30px 20px;
+            }
 
-Cette application **ne cible pas les enfants de moins de 13 ans**. Si nous découvrons qu’un enfant de moins de 13 ans nous a fourni des informations personnelles, nous les supprimerons immédiatement.
+            h2 {
+                font-size: 1.5em;
+            }
 
-## 8. Modifications
+            h3 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Politique de confidentialité</h1>
+            <p class="date">Dernière mise à jour : 14 juin 2025</p>
+        </div>
 
-Nous nous réservons le droit de modifier cette politique. Toute modification sera affichée dans cette page avec une date de mise à jour.
+        <div class="content">
+            <h2>1. Introduction</h2>
+            <p>Cette application a été développée dans le but de fournir aux utilisateurs une carte interactive des stations de recharge pour véhicules électriques en Tunisie. Nous accordons une grande importance à la vie privée de nos utilisateurs.</p>
+            <p>En utilisant cette application, vous acceptez les pratiques décrites dans cette politique de confidentialité.</p>
 
-## 9. Contact
+            <h2>2. Données collectées</h2>
+            
+            <h3>📍 Localisation</h3>
+            <p>Nous collectons votre <strong>position géographique approximative ou précise</strong> uniquement si vous autorisez l'accès à la localisation. Cette information est utilisée pour :</p>
+            <ul>
+                <li>afficher les stations à proximité,</li>
+                <li>améliorer l'expérience utilisateur.</li>
+            </ul>
+            <p>Les données de localisation ne sont <strong>jamais stockées</strong> sur nos serveurs ni partagées avec des tiers.</p>
 
-Pour toute question concernant cette politique de confidentialité, contactez-nous à :  
-📧 [issam.taboubi@gmail.com]
+            <h3>📱 Données techniques</h3>
+            <p>L'application peut collecter des informations techniques anonymes comme :</p>
+            <ul>
+                <li>le type d'appareil,</li>
+                <li>le système d'exploitation,</li>
+                <li>les performances de l'application.</li>
+            </ul>
+            <p>Ces données servent uniquement à améliorer la qualité et la stabilité du service.</p>
 
+            <h2>3. Accès et autorisations</h2>
+            <p>L'application peut demander les autorisations suivantes :</p>
+            <ul>
+                <li><strong>Accès à la localisation</strong> (pour la carte)</li>
+                <li><strong>Accès à Internet</strong> (pour charger les données des stations)</li>
+            </ul>
+            <p>Aucune autre donnée personnelle (nom, e-mail, contacts, etc.) n'est collectée.</p>
+
+            <h2>4. Partage des données</h2>
+            <p>Nous <strong>ne partageons aucune donnée personnelle</strong> avec des tiers.</p>
+
+            <h2>5. Publicité</h2>
+            <p>Cette application peut afficher de la publicité via <strong>Google AdMob</strong>. AdMob peut collecter certaines informations non personnelles pour personnaliser les annonces. Consultez la politique de confidentialité de Google :</p>
+            <p><a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+
+            <h2>6. Droits des utilisateurs</h2>
+            <p>Vous pouvez à tout moment désactiver l'accès à votre localisation depuis les paramètres de votre appareil.</p>
+
+            <h2>7. Confidentialité des enfants</h2>
+            <p>Cette application <strong>ne cible pas les enfants de moins de 13 ans</strong>. Si nous découvrons qu'un enfant de moins de 13 ans nous a fourni des informations personnelles, nous les supprimerons immédiatement.</p>
+
+            <h2>8. Modifications</h2>
+            <p>Nous nous réservons le droit de modifier cette politique. Toute modification sera affichée dans cette page avec une date de mise à jour.</p>
+
+            <h2>9. Contact</h2>
+            <div class="contact-box">
+                <p>Pour toute question concernant cette politique de confidentialité, contactez-nous à :</p>
+                <p>📧 <a href="mailto:issam.taboubi@gmail.com">issam.taboubi@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 - Tous droits réservés</p>
+        </div>
+    </div>
+</body>
+</html>
