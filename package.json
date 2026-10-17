@@ -1,8 +1,8 @@
 {
   "name": "ev-charge-car",
-  "version": "1.2.0",
-  "versionName": "1.2.0",
-  "versionCode": "120",
+  "version": "2.0.0",
+  "versionName": "2.0.0",
+  "versionCode": "200",
   "author": "Issam Taboubi",
   "homepage": "https://ionicframework.com/",
   "scripts": {
